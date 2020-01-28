@@ -36,6 +36,39 @@ VALUES ('master.dbo.DatabaseBackup', '@Directory', NULL)
      , ('master.dbo.IndexOptimize', '@Databases', '-SYSTEM_DATABASES');
 
 
+
+-- Command Line Parameters => te bepalen of slechts enkele parameters mogelijk zijn of dat een string wordt meegegeven, die dan gesplitst wordt.
+
+
+/*****************************************************************************/
+/* Optie 1, met enkele parameter                                             */
+/*****************************************************************************/
+
+SELECT * FROM #MaintenanceSolutionParameters
+
+DECLARE @BackupType varchar(4) = 'DIFF'
+
+UPDATE #MaintenanceSolutionParameters
+SET Value = @BackupType
+WHERE Parameter = '@BackupType'
+
+SELECT * FROM #MaintenanceSolutionParameters
+
+/*****************************************************************************/
+/* Optie 1, met string die gesplitst wordt                                   */
+/*****************************************************************************/
+
+--DECLARE @parameterstring varchar(max) = '@execute=''N'', @BackupType = ''FULL'', @Compress = ''N'' '
+
+--;WITH CTE AS (
+--	SELECT par = LTRIM(RTRIM(value)) 
+--	FROM STRING_SPLIT ( @parameterstring , ',' )
+--)
+--SELECT LEFT(par, PATINDEX(par, '='))
+--FROM CTE  
+
+
+
 /*****************************************************************************/
 /* Build the command line                                                    */
 /*****************************************************************************/
